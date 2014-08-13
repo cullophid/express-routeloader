@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>index.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>index.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p>express-routeloader</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-pi">
+'use strict'</span>;
+
+<span class="hljs-keyword">var</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>),
+  fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>),
+  path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>),
+  _ = <span class="hljs-built_in">require</span>(<span class="hljs-string">'lodash'</span>),
+  validator = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./validator'</span>),
+  defaults = {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>The default routes directory</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    rootDir: <span class="hljs-string">'./routes'</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>VerbMap maps filenames to default HTTP methods</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    verbMap: {
+      <span class="hljs-string">"create"</span>: <span class="hljs-string">"POST"</span>,
+      <span class="hljs-string">"read"</span>: <span class="hljs-string">"GET"</span>,
+      <span class="hljs-string">"list"</span> : <span class="hljs-string">"GET"</span>,
+      <span class="hljs-string">"search"</span> : <span class="hljs-string">"GET"</span>,
+      <span class="hljs-string">"update"</span>: <span class="hljs-string">"PUT"</span>,
+      <span class="hljs-string">"delete"</span>: <span class="hljs-string">"DELETE"</span>
+    },
+    logger: <span class="hljs-built_in">console</span>.log,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>All routes are prefixed with :</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    prefix: <span class="hljs-string">''</span>
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <h2 id="route-loader">Route loader</h2>
+<p>Returns an express router with all the routes in a given foldertree</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(options)</span> </span>{
+  <span class="hljs-keyword">var</span> router = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>).Router(),
+    config = _.extend(defaults, options),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <h3 id="scope">scope</h3>
+<p>holds all the methods for processing the folders
+and loading the routes</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    scope = {
+      routes: []
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <h4 id="scope-init">scope.init</h4>
+<p>Start loading routes</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  scope.init = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>load the files from the directory</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>.loadDir(path.join(process.cwd(), config.rootDir), config.prefix);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>add the routes to the router</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>.loadRoutes();
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <h4 id="scope-loaddir">scope.loadDir</h4>
+<p>Recursively load files from directory</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  scope.loadDir = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(dir, relativeRoute)</span> </span>{
+    <span class="hljs-keyword">var</span> files = fs.readdirSync(dir),
+      i, file, fullPath;
+
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; files.length; i += <span class="hljs-number">1</span>) {
+      file = path.basename(files[i], <span class="hljs-string">'.js'</span>); <span class="hljs-comment">// get without ext</span>
+
+      <span class="hljs-keyword">if</span> (fs.statSync(dir + <span class="hljs-string">'/'</span> + files[i]).isDirectory()) {
+
+        fullPath = relativeRoute + <span class="hljs-string">'/'</span> + files[i];
+        <span class="hljs-keyword">this</span>.loadDir(path.join(dir, files[i]), fullPath);
+
+      } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">this</span>.loadFile(file, dir, relativeRoute);
+      }
+    }
+
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <h4 id="scope-loadfile">scope.loadFile</h4>
+<p>process a file, and add it to the list of routes</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  scope.loadFile = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(file, dir, relativeRoute)</span> </span>{
+    <span class="hljs-keyword">var</span> fullPath = path.join(dir, file),
+      route;
+
+    <span class="hljs-keyword">if</span> (file.slice(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>) === <span class="hljs-string">'.'</span>) {
+      <span class="hljs-keyword">return</span>;
+    }
+
+    route = <span class="hljs-built_in">require</span>(fullPath);
+
+    route.method = (route.method || config.verbMap[file]).toLowerCase();
+    route.url = <span class="hljs-keyword">this</span>.getUrl(route, relativeRoute);
+
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> route !== <span class="hljs-string">'function'</span>) {
+      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(path.join(route.url, file + <span class="hljs-string">'.js'</span>) +
+        <span class="hljs-string">' does not export a function'</span>);
+    }
+    <span class="hljs-keyword">this</span>.routes.push(route);
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <h4 id="scope-geturl">scope.getUrl</h4>
+<p>Get the relative url to a route</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  scope.getUrl = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(route, relativeRoute)</span> </span>{
+    <span class="hljs-keyword">if</span> (route.url &amp;&amp; route.url.slice(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>) === <span class="hljs-string">'/'</span>) {
+      <span class="hljs-keyword">return</span> route.url;
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (route.url) {
+      <span class="hljs-keyword">return</span> relativeRoute + <span class="hljs-string">'/'</span> + route.url;
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-keyword">return</span> relativeRoute;
+    }
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <h4 id="scope-loadroutes">scope.loadRoutes</h4>
+<p>Load the routes into the router</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  scope.loadRoutes = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">var</span> middleware;
+    <span class="hljs-keyword">this</span>.routes.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(route)</span> </span>{
+      <span class="hljs-keyword">var</span> setup = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(req, res, next)</span> </span>{
+        req.spec = {
+          params : route.params || {},
+          query : route.query || {},
+          body : route.body || {}
+        };
+        <span class="hljs-keyword">return</span> next();
+      };
+      middleware = [setup, validator].concat(route.middleware ||  []);
+
+      router[route.method](path.join(config.prefix, route.url), middleware, route);
+      config.logger(route.method, route.url, <span class="hljs-string">'\x1B[32m  ✓ \x1B[39m'</span>);
+    });
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>GO!</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  scope.init();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>Add scope to the router for testing</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  router._scope = scope;
+
+  <span class="hljs-keyword">return</span> router;
+
+};</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
