@@ -1,4 +1,5 @@
 # Express-routeloader
+![travis](https://travis-ci.org/cullophid/express-routeloader.svg)
 
 *This is a fork of [Livedocs-routeloader](https://github.com/simonmcmanus/livedocs-routeLoader). All credit goes to [Simon Mcmannus](https://github.com/simonmcmanus)*
 
