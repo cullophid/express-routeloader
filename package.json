@@ -4,7 +4,7 @@
   "description": "Automatic routeloader for the express web framwork",
   "main": "index.js",
   "scripts": {
-    "test": "node_modules/.bin/gulp test",
+    "test": "node_modules/.bin/gulp validate",
     "docs": "node_modules/.bin/docco index.js validator.js"
   },
   "repository": {
