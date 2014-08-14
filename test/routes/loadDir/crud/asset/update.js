@@ -1,8 +1,9 @@
 'use strict';
 
-var route = function (req, res, next) {
-    return res.send('PUT /crud/asset/' + req.params.id);
-}
-route.url = ':id';
+module.exports = {
 
-module.exports = route;
+  action: function(req, res) {
+    return res.send('PUT /crud/asset/' + req.params.id);
+  },
+  url: ':id'
+};

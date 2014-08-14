@@ -1,5 +1,7 @@
 'use strict';
 
-module.exports = function (req, res, next) {
+module.exports = {
+  action: function(req, res) {
     res.send(req.params);
+  }
 };

@@ -70,12 +70,14 @@ this is very useful for maintaining multiple versions of an api.
 
 
 ## Routes
-routing endpoints are node modules that export a function:
+routing endpoints are node modules that export an object with a method `action`:
 
 ```js
 'use strict' // Ofc we are running strict!
-module.exports = function (re, res, next) {
-    res.send('Hello world');
+module.exports = {
+    action :function (re, res, next) {
+        res.send('Hello world');
+    }
 };
 
 ```
@@ -85,14 +87,14 @@ You can overwrite default settings by adding properties to the exported object:
 ```js
 'use strict' // Ofc we are running strict!
 
-var route = function (re, res, next) {
-    res.send('Hello world');
+module.exports = {
+    url = '/different/route/to/:handler',
+    method = 'PUT',
+    middleware = [func1, func2, func3],
+    action : function (re, res, next) {
+        res.send('Hello world');
+    }
 };
-
-route.url = '/different/route/to/:handler';
-route.method = 'PUT';
-route.middleware = [func1, func2, func3]
-module.exports = route;
 ```
 
 ### validation
@@ -102,34 +104,35 @@ to add validation simply add the schema to the module.
 ```js
 'use strict' // Ofc we are running strict!
 
-var route = function (req, res, next) {
-    // do an update
-    res.send('Hello world');
+module.exports = {
+    url = 'update/:handler',
+    params =  {
+        required : ['handler'],
+        properties : {
+            handler : {
+                type : 'integer',
+                minimum : 0
+            }
+        }
+    },
+    query = {
+        properties : {
+            someOption : {
+                type : 'boolean'
+            }
+        }
+    },
+    body = {
+        properties : {
+            name : {
+                type : 'string',
+                maxLength : 80
+            }
+        }
+    },
+    action : function (req, res, next) {
+        // do an update
+        res.send('Hello world');
+    }
 };
-route.url = 'update/:handler';
-rote.params =  {
-    required : ['handler'],
-    properties : {
-        handler : {
-            type : 'integer',
-            minimum : 0
-        }
-    }
-}
-route.query = {
-    properties : {
-        someOption : {
-            type : 'boolean'
-        }
-    }
-}
-route.body = {
-    properties : {
-        name : {
-            type : 'string',
-            maxLength : 80
-        }
-    }
-}
-module.exports = route;
 ```

@@ -81,9 +81,9 @@ module.exports = function(options) {
     // if no method is specified, use a default, if not default use get
     route.method = (route.method || config.verbMap[file] || 'get').toLowerCase();
     route.url = this.getUrl(route, relativeRoute);
-    if (typeof route !== 'function') {
+    if (!route.action || typeof route.action !== 'function') {
       throw new Error(path.join(route.url, file + '.js') +
-        ' does not export a function');
+        ' does not have a method : \'action\'');
     }
     this.routes.push(route);
   };
@@ -119,7 +119,7 @@ module.exports = function(options) {
       // run setup -> validator -> custom middleware -> route
       middleware = [setup, validator].concat(route.middleware ||  []);
       // add the route to the router
-      router[route.method](path.join(config.prefix, route.url), middleware, route);
+      router[route.method](path.join(config.prefix, route.url), middleware, route.action);
 
       config.logger(route.method, route.url, '\x1B[32m  ✓ \x1B[39m');
     });

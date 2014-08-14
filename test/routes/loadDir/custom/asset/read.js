@@ -1,7 +1,10 @@
 'use strict';
 
-module.exports = function (req, res, next) {
-  res.send('works');
-}
-module.exports.url = 'read/:id';
-module.exports.method = 'GET';
+
+module.exports = {
+  action : function (req, res) {
+    res.send('works');
+  },
+  url : 'read/:id',
+  method : 'GET'
+};

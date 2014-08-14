@@ -1,22 +1,22 @@
 'use strict';
 
-var route = function (req, res, next) {
-  console.log(req.params);
-  return res.send('POST /crud/asset');
-};
+module.exports = {
 
-route.body = {
-  additionalProperties : false,
-  required : ['name', 'number'],
-  properties : {
-    name : {
-      type : 'string'
-    },
-    number : {
-      type : 'integer',
-      minimum : 5
+  action : function (req, res) {
+    console.log(req.params);
+    return res.send('POST /crud/asset');
+  },
+  body : {
+    additionalProperties : false,
+    required : ['name', 'number'],
+    properties : {
+      name : {
+        type : 'string'
+      },
+      number : {
+        type : 'integer',
+        minimum : 5
+      }
     }
   }
 };
-
-module.exports = route;

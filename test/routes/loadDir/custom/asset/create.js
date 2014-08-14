@@ -1,7 +1,9 @@
 'use strict';
 
-module.exports = function (req, res, next) {
-  res.send(req.params);
-}
-module.exports.url = '/createAThing';
-module.exports.method = 'PUT';
+module.exports = {
+  action : function (req, res) {
+    res.send(req.params);
+  },
+  url : '/createAThing',
+  method : 'PUT'
+};
