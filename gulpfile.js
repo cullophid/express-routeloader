@@ -18,5 +18,5 @@ gulp.task('jshint', function() {
 gulp.task('validate', ['test','jshint']);
 
 gulp.task('watch', function() {
-  return gulp.watch(['index.js', 'test/**/*.js'], ['test']);
+  return gulp.watch(['lib/**/*.js', 'test/**/*.js'], ['test']);
 });

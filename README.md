@@ -1,5 +1,6 @@
 # Express-routeloader
 ![travis](https://travis-ci.org/cullophid/express-routeloader.svg)
+[![NPM version](https://badge.fury.io/js/express-routeloader.svg)](http://badge.fury.io/js/express-routeloader)
 
 *This is a fork of [Livedocs-routeloader](https://github.com/simonmcmanus/livedocs-routeLoader). All credit goes to [Simon Mcmannus](https://github.com/simonmcmanus)*
 
@@ -10,23 +11,32 @@ Express-routeloader builds an express router from your `./routes` folder.
 when given a directory structure like
 
     routes
-        - groups
-            - create.js
-            - read.js
-            - update.js
-            - delete.js
-            - users
-                create.js
+        - groups.js
+
+where groups is
+
+```js
+exports.read = {
+    handler : function (req, res) {
+        res.send(200);
+    }
+};
+exports.create = {
+    handler : function (req, res) {
+        res.send(200);
+    }
+};
+
+```
+
 
 
 Express-routeloader will create a router with the following routes:
 
     POST /groups
     GET /groups/:id
-    PUT /groups/:id
-    DELETE /groups/:id
 
-    POST /groups/users
+
 
 You can use multiple routers in the same project
 which is really useful for maintaining multiple versions of an api.
@@ -52,6 +62,9 @@ app.listen(3000);
 
 `logger`: Logging function. default : `console.log`
 
+`hideCRUD` : Should CRUD endpoints have the extentions be hidden.
+`GET assets/read/:id` becomes `GET assets/:id. Defaults to true.
+
 `verbMap`: Json object mapping filenames to default HTTP verbs. default :
 
 ```json
@@ -70,13 +83,13 @@ this is very useful for maintaining multiple versions of an api.
 
 
 ## Routes
-routing endpoints are node modules that export an object with a method `action`:
+routing endpoints are node modules that export a set of objects with a  method `handler`:
 
 ```js
 'use strict' // Ofc we are running strict!
-module.exports = {
-    action :function (re, res, next) {
-        res.send('Hello world');
+exports.hello = {
+    handler :function (req, res, next) {
+        res.send('world');
     }
 };
 
@@ -87,12 +100,12 @@ You can overwrite default settings by adding properties to the exported object:
 ```js
 'use strict' // Ofc we are running strict!
 
-module.exports = {
-    url = '/different/route/to/:handler',
+exports.hello = {
+    url = '/different/route/to/:id',
     method = 'PUT',
     middleware = [func1, func2, func3],
-    action : function (re, res, next) {
-        res.send('Hello world');
+    handler : function (re, res, next) {
+        res.send('World');
     }
 };
 ```
@@ -104,10 +117,11 @@ to add validation simply add the schema to the module.
 ```js
 'use strict' // Ofc we are running strict!
 
-module.exports = {
-    url = 'update/:handler',
+exports.hello = {
+    url = 'update/:id',
+    method : 'POST',
     params =  {
-        required : ['handler'],
+        required : ['id'],
         properties : {
             handler : {
                 type : 'integer',
@@ -130,9 +144,9 @@ module.exports = {
             }
         }
     },
-    action : function (req, res, next) {
+    handler : function (req, res, next) {
         // do an update
-        res.send('Hello world');
+        res.send('world');
     }
 };
 ```

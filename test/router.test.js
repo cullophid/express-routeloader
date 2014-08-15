@@ -20,9 +20,9 @@ describe('Router ', function() {
   });
 
   describe('when calling ', function() {
-    describe('GET /crud/asset/:id', function() {
+    describe('GET /crud/assets/:id', function() {
       before(function() {
-        req.url = '/crud/asset/1';
+        req.url = '/crud/assets/1';
         req.method = 'GET';
         router(req, res, next);
       });
@@ -41,13 +41,13 @@ describe('Router ', function() {
 
       it('should return a single response', function() {
         res.send.args[0].length.should.equal(1);
-        res.send.args[0][0].should.equal('GET /crud/asset/1');
+        res.send.args[0][0].should.equal('GET /crud/assets/1');
       });
     });
 
-    describe('POST /crud/asset/', function() {
+    describe('POST /crud/assets/', function() {
       before(function() {
-        req.url = '/crud/asset';
+        req.url = '/crud/assets';
         req.method = 'POST';
         req.body = {
           name : 'Andreas',
@@ -70,13 +70,13 @@ describe('Router ', function() {
 
       it('should return a single response', function() {
         res.send.args[0].length.should.equal(1);
-        res.send.args[0][0].should.equal('POST /crud/asset');
+        res.send.args[0][0].should.equal('POST /crud/assets');
       });
     });
 
-    describe('PUT /crud/asset/:id', function() {
+    describe('PUT /crud/assets/:id', function() {
       before(function() {
-        req.url = '/crud/asset/2';
+        req.url = '/crud/assets/2';
         req.method = 'PUT';
         router(req, res, next);
       });
@@ -91,13 +91,13 @@ describe('Router ', function() {
 
       it('should return a single response', function() {
         res.send.args[0].length.should.equal(1);
-        res.send.args[0][0].should.equal('PUT /crud/asset/2');
+        res.send.args[0][0].should.equal('PUT /crud/assets/2');
       });
     });
 
-    describe('DELETE /crud/asset/:id', function() {
+    describe('DELETE /crud/assets/:id', function() {
       before(function() {
-        req.url = '/crud/asset/3';
+        req.url = '/crud/assets/3';
         req.method = 'DELETE';
         router(req, res, next);
       });
@@ -111,7 +111,7 @@ describe('Router ', function() {
 
       it('should return a single response', function() {
         res.send.args[0].length.should.equal(1);
-        res.send.args[0][0].should.equal('DELETE /crud/asset/3');
+        res.send.args[0][0].should.equal('DELETE /crud/assets/3');
       });
     });
   });
