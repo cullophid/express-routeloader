@@ -5,7 +5,7 @@
 *This is a fork of [Livedocs-routeloader](https://github.com/simonmcmanus/livedocs-routeLoader). All credit goes to [Simon Mcmannus](https://github.com/simonmcmanus)*
 
 ## Basics
-Express routeloader makes it easy to handle andpoints for your REST server.
+Express-routeloader makes it easy to handle endpoints for your REST server.
 Express-routeloader builds an express router from your `./routes` folder.
 
 when given a directory structure like
