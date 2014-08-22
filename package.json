@@ -1,6 +1,6 @@
 {
   "name": "express-routeloader",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Automatic routeloader for the express web framwork",
   "main": "index.js",
   "scripts": {
