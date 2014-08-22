@@ -2,7 +2,7 @@
 ![travis](https://travis-ci.org/cullophid/express-routeloader.svg)
 [![NPM version](https://badge.fury.io/js/express-routeloader.svg)](http://badge.fury.io/js/express-routeloader)
 
-*This is a fork of [Livedocs-routeloader](https://github.com/simonmcmanus/livedocs-routeLoader). All credit goes to [Simon Mcmannus](https://github.com/simonmcmanus)*
+*This is originally a fork of [Livedocs-routeloader](https://github.com/simonmcmanus/livedocs-routeLoader). Some credit goes to [Simon Mcmannus](https://github.com/simonmcmanus)*
 
 ## Basics
 Express-routeloader makes it easy to handle endpoints for your REST server.
@@ -28,8 +28,6 @@ exports.create = {
 };
 
 ```
-
-
 
 Express-routeloader will create a router with the following routes:
 
@@ -150,3 +148,9 @@ exports.hello = {
     }
 };
 ```
+### Promises
+
+Express route validator supports promises.
+If a route handler returns a promise,
+routeloader with call res.send on promise resolution
+and next on rejection.

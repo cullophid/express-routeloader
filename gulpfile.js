@@ -4,7 +4,7 @@ var gulp = require('gulp'),
   reporter = require('jshint-stylish'),
   jshint = require('gulp-jshint');
 
-gulp.task('test', function() {
+gulp.task('mocha', function() {
   return gulp.src('test/*.js')
     .pipe(mocha({
       reporter: 'dot'
@@ -15,7 +15,7 @@ gulp.task('jshint', function() {
     .pipe(jshint())
     .pipe(jshint.reporter(reporter));
 });
-gulp.task('validate', ['test','jshint']);
+gulp.task('test', ['mocha','jshint']);
 
 gulp.task('watch', function() {
   return gulp.watch(['lib/**/*.js', 'test/**/*.js'], ['test']);
