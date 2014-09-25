@@ -1,6 +1,7 @@
 # Express-routeloader
 ![travis](https://travis-ci.org/cullophid/express-routeloader.svg)
 [![NPM version](https://badge.fury.io/js/express-routeloader.svg)](http://badge.fury.io/js/express-routeloader)
+[ ![Codeship Status for cullophid/express-routeloader](https://www.codeship.io/projects/f4240bb0-26c3-0132-3434-0a478c9aef22/status)](https://www.codeship.io/projects/37539)
 
 *This is originally a fork of [Livedocs-routeloader](https://github.com/simonmcmanus/livedocs-routeLoader). Some credit goes to [Simon Mcmannus](https://github.com/simonmcmanus)*
 
