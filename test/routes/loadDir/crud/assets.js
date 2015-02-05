@@ -5,18 +5,8 @@ exports.create = {
   handler : function (req, res) {
     console.log(req.params);
     return res.send('POST /crud/assets');
-  },
-  body : {
-    required : ['name', 'date'],
-    properties : {
-      name : {
-        type : 'string'
-      },
-      date : {
-        type : 'date'
-      }
-    }
   }
+
 };
 
 exports.delete = {
